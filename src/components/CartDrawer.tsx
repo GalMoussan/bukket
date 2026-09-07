@@ -25,25 +25,24 @@ export default function CartDrawer() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={closeCart}
-            className="fixed inset-0 z-[60]"
-            style={{ background: "color-mix(in srgb, var(--vast) 40%, transparent)" }}
+            className="fixed inset-0 z-[60] bg-night/70"
           />
           <motion.div
             initial={{ x: "100%" }}
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ type: "spring", damping: 30, stiffness: 300 }}
-            className="fixed right-0 top-0 z-[70] flex h-full w-full max-w-md flex-col border-l-2 border-vast bg-lumen"
+            className="fixed right-0 top-0 z-[70] flex h-full w-full max-w-md flex-col border-l border-white/15 bg-raised"
             role="dialog"
             aria-modal="true"
             aria-label="Your bag"
           >
-            <div className="flex items-center justify-between border-b-2 border-vast px-6 py-5">
+            <div className="flex items-center justify-between border-b border-white/15 px-6 py-5">
               <h2 className="display text-2xl">Your Bag</h2>
               <button
                 type="button"
                 onClick={closeCart}
-                className="btn btn-ghost px-3"
+                className="btn btn-chip px-3"
                 aria-label="Close cart"
               >
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -55,8 +54,8 @@ export default function CartDrawer() {
             <div className="flex-1 overflow-y-auto px-6 py-4">
               {items.length === 0 ? (
                 <div className="flex h-full flex-col items-center justify-center text-center">
-                  <p className="mb-2 text-grey-700">Your bag is empty</p>
-                  <button type="button" onClick={closeCart} className="text-sm font-bold text-umbra underline">
+                  <p className="mb-2 text-muted">Your bag is empty</p>
+                  <button type="button" onClick={closeCart} className="text-sm font-bold text-terracotta underline">
                     Continue shopping
                   </button>
                 </div>
@@ -65,9 +64,9 @@ export default function CartDrawer() {
                   {items.map((item) => (
                     <div
                       key={item.variant.id}
-                      className="flex gap-4 rounded-[8px] border-2 border-vast bg-paper p-4"
+                      className="flex gap-4 rounded-xl bg-night p-4 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.12)]"
                     >
-                      <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-[4px] border-2 border-vast bg-mint">
+                      <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-lg bg-dusk">
                         <Image
                           src={item.variant.image}
                           alt={item.variant.name}
@@ -80,12 +79,12 @@ export default function CartDrawer() {
                         <div className="flex items-start justify-between">
                           <div>
                             <p className="font-bold">{PRODUCT.name}</p>
-                            <p className="text-sm text-grey-700">{item.variant.name}</p>
+                            <p className="text-sm text-muted">{item.variant.name}</p>
                           </div>
                           <button
                             type="button"
                             onClick={() => removeFromCart(item.variant.id)}
-                            className="text-grey-500 hover:text-vast"
+                            className="text-muted hover:text-cream"
                             aria-label={`Remove ${item.variant.name}`}
                           >
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -131,9 +130,9 @@ export default function CartDrawer() {
             </div>
 
             {items.length > 0 && (
-              <div className="border-t-2 border-vast bg-paper px-6 py-5">
+              <div className="border-t border-white/15 bg-night px-6 py-5">
                 <div className="mb-4 flex items-center justify-between">
-                  <span className="text-grey-700">Subtotal</span>
+                  <span className="text-muted">Subtotal</span>
                   <span className="display text-2xl">${total.toFixed(2)}</span>
                 </div>
                 <Link
@@ -143,7 +142,7 @@ export default function CartDrawer() {
                 >
                   Checkout
                 </Link>
-                <p className="mt-3 text-center text-xs text-grey-700">
+                <p className="mt-3 text-center text-xs text-muted">
                   Review your order — payment coming soon
                 </p>
               </div>

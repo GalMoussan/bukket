@@ -3,6 +3,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CartDrawer from "@/components/CartDrawer";
 import CheckoutView from "@/components/CheckoutView";
+import SmokeLayer from "@/components/SmokeLayer";
 
 export const metadata: Metadata = {
   title: "Checkout — Bukket",
@@ -12,6 +13,7 @@ export const metadata: Metadata = {
 export default function CheckoutPage() {
   return (
     <>
+      <SmokeLayer />
       <Header />
       <main>
         <CheckoutView />

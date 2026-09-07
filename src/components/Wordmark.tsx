@@ -4,6 +4,6 @@ type WordmarkProps = {
 
 export default function Wordmark({ className = "" }: WordmarkProps) {
   return (
-    <span className={`display text-vast ${className}`}>[[ BUKKET ]]</span>
+    <span className={`display ${className}`}>[[ BUKKET ]]</span>
   );
 }

@@ -43,8 +43,7 @@ export default function AgeGate() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-[100] flex items-center justify-center p-6"
-          style={{ background: "color-mix(in srgb, var(--vast) 48%, transparent)" }}
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-night/80 p-6"
           role="dialog"
           aria-modal="true"
           aria-labelledby="age-gate-title"
@@ -53,13 +52,13 @@ export default function AgeGate() {
             initial={{ scale: 0.97, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.97, opacity: 0 }}
-            className="w-full max-w-md rounded-[16px] border-2 border-vast bg-paper p-8 text-center"
+            className="panel w-full max-w-md p-8 text-center"
           >
-            <Wordmark className="mb-6 block text-3xl" />
+            <Wordmark className="mb-6 block text-3xl text-cream" />
             <h2 id="age-gate-title" className="display mb-3 text-2xl">
               Age Verification
             </h2>
-            <p className="mb-8 text-[0.98rem] leading-relaxed text-grey-700">
+            <p className="mb-8 text-[0.98rem] leading-relaxed text-muted">
               You must be 21 years or older to enter this site. By entering, you
               confirm you are of legal age in your jurisdiction.
             </p>
@@ -67,7 +66,7 @@ export default function AgeGate() {
               <button type="button" onClick={verify} className="btn btn-primary flex-1">
                 I&apos;m 21 or older
               </button>
-              <button type="button" onClick={deny} className="btn btn-ghost flex-1">
+              <button type="button" onClick={deny} className="btn btn-chip flex-1">
                 Exit
               </button>
             </div>

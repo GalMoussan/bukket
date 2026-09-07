@@ -48,7 +48,7 @@ export default function RootLayout({
       data-scroll-behavior="smooth"
       className={`${outfit.variable} ${assistant.variable} ${playpen.variable} h-full antialiased`}
     >
-      <body className="min-h-full bg-lumen text-vast">
+      <body className="min-h-full bg-night text-cream">
         <CartProvider>
           <AgeGate />
           {children}

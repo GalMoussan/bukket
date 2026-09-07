@@ -7,10 +7,12 @@ import FunVideo from "@/components/FunVideo";
 import CartDrawer from "@/components/CartDrawer";
 import StickyBuyBar from "@/components/StickyBuyBar";
 import Footer from "@/components/Footer";
+import SmokeLayer from "@/components/SmokeLayer";
 
 export default function Home() {
   return (
     <>
+      <SmokeLayer />
       <Header />
       <main>
         <Hero />

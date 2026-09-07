@@ -9,8 +9,8 @@ export default function ColorPicker() {
 
   return (
     <div>
-      <p className="mb-3 text-sm font-bold text-grey-700">
-        Color — <span className="text-vast">{selectedVariant.name}</span>
+      <p className="mb-3 text-sm font-bold text-muted">
+        Color — <span className="text-cream">{selectedVariant.name}</span>
       </p>
       <div className="flex flex-wrap gap-3">
         {COLOR_VARIANTS.map((variant) => {
@@ -22,8 +22,10 @@ export default function ColorPicker() {
               onClick={() => setSelectedVariant(variant)}
               aria-label={variant.name}
               aria-pressed={isSelected}
-              className={`relative h-14 w-14 overflow-hidden rounded-[4px] border-2 border-vast bg-linen ${
-                isSelected ? "ring-2 ring-tide ring-offset-2 ring-offset-paper" : ""
+              className={`relative h-12 w-12 overflow-hidden rounded-lg bg-dusk ${
+                isSelected
+                  ? "ring-2 ring-terracotta ring-offset-2 ring-offset-night"
+                  : "shadow-[inset_0_0_0_1px_rgba(255,255,255,0.15)]"
               }`}
             >
               <Image
@@ -31,7 +33,7 @@ export default function ColorPicker() {
                 alt=""
                 fill
                 className="object-contain p-1"
-                sizes="56px"
+                sizes="48px"
                 loading="eager"
               />
             </button>
