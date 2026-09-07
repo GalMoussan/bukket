@@ -1,9 +1,11 @@
 "use client";
 
+import type { ReactNode } from "react";
 import { PRODUCT } from "@/lib/product";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
+import NoteCard from "./NoteCard";
 
-const icons: Record<string, React.ReactNode> = {
+const icons: Record<string, ReactNode> = {
   shield: (
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
       <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
@@ -28,40 +30,43 @@ const icons: Record<string, React.ReactNode> = {
   ),
 };
 
+const noteStyles = [
+  { color: "mint" as const, rotate: "-1.1deg" },
+  { color: "sky" as const, rotate: "1.3deg" },
+  { color: "sand" as const, rotate: "-0.7deg" },
+  { color: "dawn" as const, rotate: "1deg" },
+];
+
 export default function Features() {
+  const reduce = useReducedMotion();
+
   return (
-    <section id="features" className="scroll-mt-20 border-t border-white/5 py-20 md:py-28">
-      <div className="mx-auto max-w-6xl px-5 md:px-8">
+    <section id="features" className="page-gutter scroll-mt-24 py-8 md:py-10">
+      <div className="paper-card p-6 md:p-12 lg:p-16">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={reduce ? false : { opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mb-14"
+          className="mb-12"
         >
-          <p className="mb-2 text-sm font-medium uppercase tracking-widest text-[#B8E638]">
-            Built Different
-          </p>
-          <h2 className="text-3xl font-bold md:text-4xl">Why Bukket</h2>
+          <p className="eyebrow mb-2">Why Bukket</p>
+          <h2 className="display text-4xl md:text-5xl">Built Different</h2>
         </motion.div>
 
         <div className="grid gap-6 sm:grid-cols-2">
           {PRODUCT.features.map((feature, i) => (
-            <motion.div
+            <NoteCard
               key={feature.title}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
-              className="group rounded-2xl border border-white/5 bg-white/[0.02] p-8 transition hover:border-white/10 hover:bg-white/[0.04]"
+              color={noteStyles[i].color}
+              rotate={reduce ? "0deg" : noteStyles[i].rotate}
+              delay={i * 0.08}
             >
-              <div className="mb-4 text-[#B8E638]">
-                {icons[feature.icon]}
-              </div>
-              <h3 className="mb-2 text-lg font-semibold">{feature.title}</h3>
-              <p className="text-sm leading-relaxed text-white/50">
+              <div className="mb-3 text-vast">{icons[feature.icon]}</div>
+              <h3 className="display mb-2 text-2xl">{feature.title}</h3>
+              <p className="text-[0.98rem] leading-relaxed text-vast">
                 {feature.description}
               </p>
-            </motion.div>
+            </NoteCard>
           ))}
         </div>
       </div>

@@ -1,61 +1,65 @@
 "use client";
 
 import { PRODUCT, VIDEOS } from "@/lib/product";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import YouTubeEmbed from "./YouTubeEmbed";
+import NoteCard from "./NoteCard";
+
+const noteStyles = [
+  { color: "mint" as const, rotate: "-1.4deg" },
+  { color: "sand" as const, rotate: "1.2deg" },
+  { color: "dawn" as const, rotate: "-0.8deg" },
+];
 
 export default function HowItWorks() {
+  const reduce = useReducedMotion();
+
   return (
-    <section id="how-it-works" className="scroll-mt-20 border-t border-white/5 py-20 md:py-28">
-      <div className="mx-auto max-w-6xl px-5 md:px-8">
+    <section id="how-it-works" className="page-gutter scroll-mt-24 py-8 md:py-10">
+      <div className="paper-card p-6 md:p-12 lg:p-16">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={reduce ? false : { opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mb-14 text-center"
+          className="mb-12 text-center"
         >
-          <p className="mb-2 text-sm font-medium uppercase tracking-widest text-[#B8E638]">
-            Simple
-          </p>
-          <h2 className="text-3xl font-bold md:text-4xl">How It Works</h2>
+          <p className="eyebrow mb-2">How It Works</p>
+          <h2 className="display text-4xl md:text-5xl">Simple</h2>
         </motion.div>
 
+        <div className="mb-14 grid gap-8 md:grid-cols-3 md:gap-6">
+          {PRODUCT.howItWorks.map((step, i) => (
+            <NoteCard
+              key={step.step}
+              color={noteStyles[i].color}
+              rotate={reduce ? "0deg" : noteStyles[i].rotate}
+              delay={i * 0.1}
+            >
+              <p className="note-hand mb-2 text-sm text-grey-700">
+                Step {step.step}
+              </p>
+              <h3 className="display mb-2 text-2xl">{step.title}</h3>
+              <p className="text-[0.98rem] leading-relaxed text-vast">
+                {step.description}
+              </p>
+            </NoteCard>
+          ))}
+        </div>
+
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={reduce ? false : { opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mb-14"
         >
           <YouTubeEmbed
             videoId={VIDEOS.howItWorks.id}
             title={VIDEOS.howItWorks.title}
             poster={VIDEOS.howItWorks.poster}
           />
-          <p className="mt-4 text-center text-sm text-white/40">
+          <p className="mt-4 text-center text-sm text-grey-700">
             Watch how to use your Bukket — click to play
           </p>
         </motion.div>
-
-        <div className="grid gap-8 md:grid-cols-3">
-          {PRODUCT.howItWorks.map((step, i) => (
-            <motion.div
-              key={step.step}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.15 }}
-              className="relative rounded-2xl border border-white/5 bg-white/[0.02] p-8"
-            >
-              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-[#B8E638]/10 text-lg font-bold text-[#B8E638]">
-                {step.step}
-              </div>
-              <h3 className="mb-2 text-xl font-semibold">{step.title}</h3>
-              <p className="text-sm leading-relaxed text-white/50">
-                {step.description}
-              </p>
-            </motion.div>
-          ))}
-        </div>
       </div>
     </section>
   );
