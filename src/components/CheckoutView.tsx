@@ -85,29 +85,24 @@ export default function CheckoutView() {
 
   if (!hydrated) {
     return (
-      <section className="mx-auto max-w-6xl px-5 pb-24 pt-28 md:px-8 md:pt-32">
+      <section className="page-gutter py-12">
         <div className="mb-10">
-          <p className="mb-2 text-sm font-medium uppercase tracking-widest text-[#B8E638]">
-            Checkout
-          </p>
-          <h1 className="text-3xl font-bold md:text-4xl">Your order</h1>
+          <p className="eyebrow mb-2">Checkout</p>
+          <h1 className="display text-4xl">Your order</h1>
         </div>
-        <div className="h-64 animate-pulse rounded-2xl border border-white/10 bg-white/[0.02]" />
+        <div className="h-64 animate-pulse rounded-[16px] border-2 border-vast bg-paper" />
       </section>
     );
   }
 
   if (items.length === 0) {
     return (
-      <section className="mx-auto flex min-h-[70vh] max-w-6xl flex-col items-center justify-center px-5 pb-24 pt-28 text-center md:px-8 md:pt-32">
-        <h1 className="mb-2 text-lg font-medium">Your bag is empty</h1>
-        <p className="mb-8 text-sm text-white/50">
+      <section className="page-gutter flex min-h-[60vh] flex-col items-center justify-center py-16 text-center">
+        <h1 className="display mb-3 text-4xl">Your bag is empty</h1>
+        <p className="mb-8 text-sm text-grey-700">
           Add a Bukket to your bag before checking out.
         </p>
-        <Link
-          href="/#product"
-          className="rounded-xl bg-white px-8 py-3.5 text-sm font-semibold text-black transition hover:bg-white/90"
-        >
+        <Link href="/#product" className="btn btn-primary">
           Continue shopping
         </Link>
       </section>
@@ -116,21 +111,16 @@ export default function CheckoutView() {
 
   if (submitted) {
     return (
-      <section className="mx-auto max-w-xl px-5 pb-24 pt-28 md:px-8 md:pt-32">
-        <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-8 text-center">
-          <p className="mb-2 text-sm font-medium uppercase tracking-widest text-[#B8E638]">
-            Preview
-          </p>
-          <h1 className="mb-3 text-3xl font-bold">Order ready</h1>
-          <p className="mb-8 text-sm leading-relaxed text-white/50">
+      <section className="page-gutter py-16">
+        <div className="mx-auto max-w-xl rounded-[16px] border-2 border-vast bg-paper p-8 text-center">
+          <p className="eyebrow mb-2">Preview</p>
+          <h1 className="display mb-3 text-4xl">Order ready</h1>
+          <p className="mb-8 text-sm leading-relaxed text-grey-700">
             Payment isn&apos;t live yet, so nothing was charged. Your bag still
             has {itemCount} item{itemCount === 1 ? "" : "s"} totaling $
             {grandTotal.toFixed(2)}.
           </p>
-          <Link
-            href="/#product"
-            className="inline-block rounded-xl bg-white px-8 py-3.5 text-sm font-semibold text-black transition hover:bg-white/90"
-          >
+          <Link href="/#product" className="btn btn-primary">
             Back to shop
           </Link>
         </div>
@@ -139,18 +129,16 @@ export default function CheckoutView() {
   }
 
   return (
-    <section className="mx-auto max-w-6xl px-5 pb-24 pt-28 md:px-8 md:pt-32">
+    <section className="page-gutter py-12">
       <div className="mb-10">
-        <p className="mb-2 text-sm font-medium uppercase tracking-widest text-[#B8E638]">
-          Checkout
-        </p>
-        <h1 className="text-3xl font-bold md:text-4xl">Your order</h1>
-        <p className="mt-2 text-sm text-white/40">
+        <p className="eyebrow mb-2">Checkout</p>
+        <h1 className="display text-4xl md:text-5xl">Your order</h1>
+        <p className="mt-2 max-w-[58ch] text-sm text-grey-700">
           Review your bag. Payment will be added next — you will not be charged.
         </p>
       </div>
 
-      <div className="grid gap-10 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
+      <div className="grid gap-10 rounded-[16px] border-2 border-vast bg-paper p-6 md:p-10 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
         <form onSubmit={handleSubmit} className="order-2 space-y-8 lg:order-1" noValidate>
           <fieldset className="space-y-4">
             <legend className="mb-2 text-lg font-semibold">Contact</legend>
@@ -228,26 +216,23 @@ export default function CheckoutView() {
             </div>
           </fieldset>
 
-          <button
-            type="submit"
-            className="w-full rounded-xl bg-white py-4 text-sm font-semibold text-black transition hover:bg-white/90 active:scale-[0.98]"
-          >
+          <button type="submit" className="btn btn-primary w-full">
             Place order
           </button>
-          <p className="text-center text-xs text-white/30">
+          <p className="text-center text-xs text-grey-700">
             Preview only. Payment is not live yet.
           </p>
         </form>
 
-        <aside className="order-1 h-fit rounded-2xl border border-white/10 bg-white/[0.02] p-6 lg:order-2">
-          <h2 className="mb-5 text-lg font-semibold">Bag</h2>
+        <aside className="order-1 h-fit rounded-[16px] border-2 border-vast bg-paper p-6 lg:order-2">
+          <h2 className="display mb-5 text-2xl">Bag</h2>
           <div className="space-y-4">
             {items.map((item) => (
               <div
                 key={item.variant.id}
-                className="flex gap-4 rounded-xl border border-white/5 bg-white/[0.02] p-4"
+                className="flex gap-4 rounded-[8px] border-2 border-vast bg-linen p-4"
               >
-                <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-lg bg-[#1a1a24]">
+                <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-[4px] border-2 border-vast bg-mint">
                   <Image
                     src={item.variant.image}
                     alt={item.variant.name}
@@ -260,12 +245,12 @@ export default function CheckoutView() {
                   <div className="flex items-start justify-between gap-2">
                     <div>
                       <p className="font-medium">{PRODUCT.name}</p>
-                      <p className="text-sm text-white/50">{item.variant.name}</p>
+                      <p className="text-sm text-grey-700">{item.variant.name}</p>
                     </div>
                     <button
                       type="button"
                       onClick={() => removeFromCart(item.variant.id)}
-                      className="text-white/30 transition hover:text-white/60"
+                      className="text-grey-500 hover:text-vast"
                       aria-label={`Remove ${item.variant.name}`}
                     >
                       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -280,18 +265,18 @@ export default function CheckoutView() {
                         onClick={() =>
                           updateQuantity(item.variant.id, item.quantity - 1)
                         }
-                        className="flex h-7 w-7 items-center justify-center rounded-md border border-white/10 text-sm transition hover:bg-white/5"
+                        className="qty-btn"
                         aria-label={`Decrease quantity of ${item.variant.name}`}
                       >
                         −
                       </button>
-                      <span className="w-6 text-center text-sm">{item.quantity}</span>
+                      <span className="w-6 text-center text-sm font-bold">{item.quantity}</span>
                       <button
                         type="button"
                         onClick={() =>
                           updateQuantity(item.variant.id, item.quantity + 1)
                         }
-                        className="flex h-7 w-7 items-center justify-center rounded-md border border-white/10 text-sm transition hover:bg-white/5"
+                        className="qty-btn"
                         aria-label={`Increase quantity of ${item.variant.name}`}
                       >
                         +
@@ -306,21 +291,21 @@ export default function CheckoutView() {
             ))}
           </div>
 
-          <dl className="mt-6 space-y-3 border-t border-white/10 pt-5 text-sm">
+          <dl className="mt-6 space-y-3 border-t-2 border-vast/15 pt-5 text-sm">
             <div className="flex justify-between">
-              <dt className="text-white/50">Subtotal</dt>
+              <dt className="text-grey-700">Subtotal</dt>
               <dd>${total.toFixed(2)}</dd>
             </div>
             <div className="flex justify-between">
-              <dt className="text-white/50">Shipping</dt>
+              <dt className="text-grey-700">Shipping</dt>
               <dd>{shipping === 0 ? "Free" : `$${shipping.toFixed(2)}`}</dd>
             </div>
-            <div className="flex justify-between text-base font-semibold">
+            <div className="flex justify-between text-base font-bold">
               <dt>Total</dt>
               <dd>${grandTotal.toFixed(2)}</dd>
             </div>
           </dl>
-          <p className="mt-3 text-xs text-white/30">
+          <p className="mt-3 text-xs text-grey-700">
             Free shipping on orders over ${SHIPPING.freeOver.toFixed(0)}.
           </p>
         </aside>
@@ -352,7 +337,7 @@ function Field({
 
   return (
     <label htmlFor={id} className="block text-sm">
-      <span className="mb-1.5 block text-white/60">{label}</span>
+      <span className="mb-1.5 block font-bold text-grey-700">{label}</span>
       <input
         id={id}
         type={type}
@@ -361,12 +346,10 @@ function Field({
         aria-invalid={Boolean(error)}
         aria-describedby={error ? errorId : undefined}
         onChange={(event) => onChange(event.target.value)}
-        className={`w-full rounded-xl border bg-white/[0.03] px-4 py-3 text-white outline-none transition placeholder:text-white/20 focus:border-white/30 ${
-          error ? "border-red-400/60" : "border-white/10"
-        }`}
+        className="field-input"
       />
       {error ? (
-        <span id={errorId} className="mt-1 block text-xs text-red-400">
+        <span id={errorId} className="mt-1 block text-xs text-flare">
           {error}
         </span>
       ) : null}

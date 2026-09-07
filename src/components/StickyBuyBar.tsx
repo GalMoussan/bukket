@@ -25,19 +25,16 @@ export default function StickyBuyBar() {
           animate={{ y: 0 }}
           exit={{ y: 100 }}
           transition={{ type: "spring", damping: 25, stiffness: 300 }}
-          className="fixed bottom-0 left-0 right-0 z-40 border-t border-white/10 bg-[#0a0a0f]/90 backdrop-blur-xl md:hidden"
+          className="fixed bottom-3 left-3 right-3 z-40 md:hidden"
         >
-          <div className="flex items-center justify-between px-5 py-3">
+          <div className="flex items-center justify-between rounded-[4px] border-2 border-vast bg-paper px-3 py-2">
             <div>
-              <p className="text-sm font-medium">{PRODUCT.name}</p>
-              <p className="text-xs text-white/50">{selectedVariant.name}</p>
+              <p className="text-sm font-bold">{PRODUCT.name}</p>
+              <p className="text-xs text-grey-700">{selectedVariant.name}</p>
             </div>
             <div className="flex items-center gap-3">
               <span className="font-bold">${PRODUCT.price.toFixed(2)}</span>
-              <button
-                onClick={addToCart}
-                className="rounded-xl bg-white px-5 py-2.5 text-sm font-semibold text-black"
-              >
+              <button type="button" onClick={addToCart} className="btn btn-primary">
                 Add to Bag
               </button>
             </div>
