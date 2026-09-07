@@ -1,17 +1,28 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Outfit, Assistant, Playpen_Sans } from "next/font/google";
 import "./globals.css";
 import { CartProvider } from "@/context/CartContext";
 import AgeGate from "@/components/AgeGate";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const outfit = Outfit({
+  variable: "--font-outfit",
   subsets: ["latin"],
+  weight: ["300", "400"],
+  display: "swap",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const assistant = Assistant({
+  variable: "--font-assistant",
   subsets: ["latin"],
+  weight: ["400", "700"],
+  display: "swap",
+});
+
+const playpen = Playpen_Sans({
+  variable: "--font-playpen",
+  subsets: ["latin"],
+  weight: ["400"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -34,9 +45,10 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      data-scroll-behavior="smooth"
+      className={`${outfit.variable} ${assistant.variable} ${playpen.variable} h-full antialiased`}
     >
-      <body className="min-h-full">
+      <body className="min-h-full bg-lumen text-vast">
         <CartProvider>
           <AgeGate />
           {children}
