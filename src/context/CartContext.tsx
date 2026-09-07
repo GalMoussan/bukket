@@ -5,6 +5,7 @@ import {
   useContext,
   useState,
   useCallback,
+  useSyncExternalStore,
   type ReactNode,
 } from "react";
 import { COLOR_VARIANTS, PRODUCT, type ColorVariant } from "@/lib/product";
@@ -13,6 +14,9 @@ export type CartItem = {
   variant: ColorVariant;
   quantity: number;
 };
+
+const CART_STORAGE_KEY = "bukket-cart";
+const EMPTY_ITEMS: CartItem[] = [];
 
 type CartContextType = {
   items: CartItem[];
@@ -30,15 +34,88 @@ type CartContextType = {
 
 const CartContext = createContext<CartContextType | null>(null);
 
+type Listener = () => void;
+
+let cartItems: CartItem[] = EMPTY_ITEMS;
+let cartLoaded = false;
+const cartListeners = new Set<Listener>();
+
+function parseCart(raw: string | null): CartItem[] {
+  if (!raw) return EMPTY_ITEMS;
+  try {
+    const parsed: unknown = JSON.parse(raw);
+    if (!Array.isArray(parsed)) return EMPTY_ITEMS;
+    const items = parsed.flatMap((entry) => {
+      if (!entry || typeof entry !== "object") return [];
+      const record = entry as { variant?: { id?: string }; quantity?: unknown };
+      const variant = COLOR_VARIANTS.find((v) => v.id === record.variant?.id);
+      const quantity = Number(record.quantity);
+      if (!variant || !Number.isInteger(quantity) || quantity < 1) return [];
+      return [{ variant, quantity }];
+    });
+    return items.length === 0 ? EMPTY_ITEMS : items;
+  } catch {
+    return EMPTY_ITEMS;
+  }
+}
+
+function emitCart() {
+  cartListeners.forEach((listener) => listener());
+}
+
+function loadCart() {
+  if (cartLoaded) return;
+  cartLoaded = true;
+  if (typeof window === "undefined") return;
+  try {
+    cartItems = parseCart(localStorage.getItem(CART_STORAGE_KEY));
+  } catch {
+    cartItems = EMPTY_ITEMS;
+  }
+}
+
+function getCartSnapshot() {
+  loadCart();
+  return cartItems;
+}
+
+function getServerCartSnapshot() {
+  return EMPTY_ITEMS;
+}
+
+function subscribeCart(listener: Listener) {
+  cartListeners.add(listener);
+  return () => {
+    cartListeners.delete(listener);
+  };
+}
+
+function setCartItems(updater: (prev: CartItem[]) => CartItem[]) {
+  const next = updater(cartItems);
+  cartItems = next.length === 0 ? EMPTY_ITEMS : next;
+  if (typeof window !== "undefined") {
+    try {
+      localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cartItems));
+    } catch {
+      // Private mode can block storage; keep the in-memory cart.
+    }
+  }
+  emitCart();
+}
+
 export function CartProvider({ children }: { children: ReactNode }) {
-  const [items, setItems] = useState<CartItem[]>([]);
+  const items = useSyncExternalStore(
+    subscribeCart,
+    getCartSnapshot,
+    getServerCartSnapshot
+  );
   const [isOpen, setIsOpen] = useState(false);
   const [selectedVariant, setSelectedVariant] = useState<ColorVariant>(
     COLOR_VARIANTS[0]
   );
 
   const addToCart = useCallback(() => {
-    setItems((prev) => {
+    setCartItems((prev) => {
       const existing = prev.find((i) => i.variant.id === selectedVariant.id);
       if (existing) {
         return prev.map((i) =>
@@ -53,15 +130,15 @@ export function CartProvider({ children }: { children: ReactNode }) {
   }, [selectedVariant]);
 
   const removeFromCart = useCallback((variantId: string) => {
-    setItems((prev) => prev.filter((i) => i.variant.id !== variantId));
+    setCartItems((prev) => prev.filter((i) => i.variant.id !== variantId));
   }, []);
 
   const updateQuantity = useCallback((variantId: string, quantity: number) => {
     if (quantity <= 0) {
-      setItems((prev) => prev.filter((i) => i.variant.id !== variantId));
+      setCartItems((prev) => prev.filter((i) => i.variant.id !== variantId));
       return;
     }
-    setItems((prev) =>
+    setCartItems((prev) =>
       prev.map((i) =>
         i.variant.id === variantId ? { ...i, quantity } : i
       )

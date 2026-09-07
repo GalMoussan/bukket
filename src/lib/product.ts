@@ -11,11 +11,18 @@ export const VIDEOS = {
   howItWorks: {
     id: "9zFLBgAtP8E",
     title: "BUKKET — How It Works",
+    poster: "/products/purple-green.png",
   },
   fun: {
     id: "bZWzcAOoX0s",
     title: "Bukket Movie",
+    poster: "/products/blue-yellow.png",
   },
+} as const;
+
+export const SHIPPING = {
+  freeOver: 50,
+  flatRate: 5.99,
 } as const;
 
 export const PRODUCT = {

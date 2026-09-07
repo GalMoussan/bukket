@@ -7,20 +7,21 @@ import { motion } from "framer-motion";
 type YouTubeEmbedProps = {
   videoId: string;
   title: string;
+  poster: string;
   className?: string;
 };
 
 export default function YouTubeEmbed({
   videoId,
   title,
+  poster,
   className = "",
 }: YouTubeEmbedProps) {
   const [playing, setPlaying] = useState(false);
-  const thumbnail = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
 
   return (
     <div
-      className={`relative aspect-video w-full overflow-hidden rounded-2xl border border-white/10 bg-black shadow-2xl ${className}`}
+      className={`relative aspect-video w-full overflow-hidden rounded-2xl border border-white/10 bg-[#12121a] shadow-2xl ${className}`}
     >
       {playing ? (
         <iframe
@@ -38,14 +39,21 @@ export default function YouTubeEmbed({
           aria-label={`Play video: ${title}`}
         >
           <Image
-            src={thumbnail}
-            alt={title}
+            src={poster}
+            alt=""
             fill
-            className="object-cover transition duration-500 group-hover:scale-[1.02]"
+            aria-hidden="true"
+            className="object-cover scale-125 blur-xl"
             sizes="(max-width: 768px) 100vw, 900px"
-            unoptimized
           />
-          <div className="absolute inset-0 bg-black/30 transition group-hover:bg-black/20" />
+          <Image
+            src={poster}
+            alt=""
+            fill
+            className="object-contain p-4 transition duration-500 group-hover:scale-[1.02] md:p-6"
+            sizes="(max-width: 768px) 100vw, 900px"
+          />
+          <div className="absolute inset-0 bg-black/25 transition group-hover:bg-black/15" />
           <motion.div
             whileHover={{ scale: 1.08 }}
             whileTap={{ scale: 0.95 }}

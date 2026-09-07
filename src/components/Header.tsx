@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import { useCart } from "@/context/CartContext";
 
 export default function Header() {
@@ -22,29 +23,29 @@ export default function Header() {
       }`}
     >
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5 md:h-[72px] md:px-8">
-        <a href="#" className="text-xl font-bold tracking-widest md:text-2xl">
+        <Link href="/" className="text-xl font-bold tracking-widest md:text-2xl">
           BUKKET
-        </a>
+        </Link>
 
         <nav className="hidden items-center gap-8 md:flex">
-          <a
-            href="#product"
+          <Link
+            href="/#product"
             className="text-sm text-white/60 transition hover:text-white"
           >
             Shop
-          </a>
-          <a
-            href="#how-it-works"
+          </Link>
+          <Link
+            href="/#how-it-works"
             className="text-sm text-white/60 transition hover:text-white"
           >
             How It Works
-          </a>
-          <a
-            href="#features"
+          </Link>
+          <Link
+            href="/#features"
             className="text-sm text-white/60 transition hover:text-white"
           >
             Features
-          </a>
+          </Link>
         </nav>
 
         <button

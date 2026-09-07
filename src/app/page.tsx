@@ -1,4 +1,3 @@
-import AgeGate from "@/components/AgeGate";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import ColorShowcase from "@/components/ColorShowcase";
@@ -12,7 +11,6 @@ import Footer from "@/components/Footer";
 export default function Home() {
   return (
     <>
-      <AgeGate />
       <Header />
       <main>
         <Hero />

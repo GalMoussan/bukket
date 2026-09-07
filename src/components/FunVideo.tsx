@@ -31,6 +31,7 @@ export default function FunVideo() {
           <YouTubeEmbed
             videoId={VIDEOS.fun.id}
             title={VIDEOS.fun.title}
+            poster={VIDEOS.fun.poster}
           />
         </motion.div>
       </div>

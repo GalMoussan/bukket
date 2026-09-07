@@ -6,7 +6,7 @@ import YouTubeEmbed from "./YouTubeEmbed";
 
 export default function HowItWorks() {
   return (
-    <section id="how-it-works" className="border-t border-white/5 py-20 md:py-28">
+    <section id="how-it-works" className="scroll-mt-20 border-t border-white/5 py-20 md:py-28">
       <div className="mx-auto max-w-6xl px-5 md:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -29,6 +29,7 @@ export default function HowItWorks() {
           <YouTubeEmbed
             videoId={VIDEOS.howItWorks.id}
             title={VIDEOS.howItWorks.title}
+            poster={VIDEOS.howItWorks.poster}
           />
           <p className="mt-4 text-center text-sm text-white/40">
             Watch how to use your Bukket — click to play

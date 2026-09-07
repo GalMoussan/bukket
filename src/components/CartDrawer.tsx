@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { useCart } from "@/context/CartContext";
 import { PRODUCT } from "@/lib/product";
@@ -135,11 +136,15 @@ export default function CartDrawer() {
                   <span className="text-white/50">Subtotal</span>
                   <span className="text-xl font-bold">${total.toFixed(2)}</span>
                 </div>
-                <button className="w-full rounded-xl bg-white py-4 text-sm font-semibold text-black transition hover:bg-white/90 active:scale-[0.98]">
+                <Link
+                  href="/checkout"
+                  onClick={closeCart}
+                  className="block w-full rounded-xl bg-white py-4 text-center text-sm font-semibold text-black transition hover:bg-white/90 active:scale-[0.98]"
+                >
                   Checkout
-                </button>
+                </Link>
                 <p className="mt-3 text-center text-xs text-white/30">
-                  Secure checkout powered by Stripe
+                  Review your order — payment coming soon
                 </p>
               </div>
             )}
