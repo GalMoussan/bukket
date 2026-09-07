@@ -1,78 +1,51 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useCart } from "@/context/CartContext";
+import { PRODUCT } from "@/lib/product";
+import Wordmark from "./Wordmark";
 
 export default function Header() {
-  const { openCart, itemCount } = useCart();
-  const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  const { openCart, addToCart, itemCount } = useCart();
 
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? "bg-[#0a0a0f]/80 backdrop-blur-xl border-b border-white/5"
-          : "bg-transparent"
-      }`}
-    >
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5 md:h-[72px] md:px-8">
-        <Link href="/" className="text-xl font-bold tracking-widest md:text-2xl">
-          BUKKET
+    <header className="sticky top-3 z-50 page-gutter">
+      <div className="relative flex items-center justify-between gap-2 rounded-[4px] border-2 border-vast bg-paper px-2 py-2 md:px-3">
+        <div className="hidden sm:block">
+          <Link href="/#how-it-works" className="btn btn-secondary">
+            How it works
+          </Link>
+        </div>
+        <div className="sm:hidden">
+          <Link href="/#how-it-works" className="btn btn-secondary" aria-label="How it works">
+            Watch
+          </Link>
+        </div>
+
+        <Link href="/" className="absolute left-1/2 -translate-x-1/2">
+          <Wordmark className="text-lg md:text-2xl" />
         </Link>
 
-        <nav className="hidden items-center gap-8 md:flex">
-          <Link
-            href="/#product"
-            className="text-sm text-white/60 transition hover:text-white"
+        <div className="ml-auto flex items-center gap-2">
+          <div className="hidden md:block">
+            <button type="button" onClick={addToCart} className="btn btn-primary">
+              Add to bag · ${PRODUCT.price.toFixed(2)}
+            </button>
+          </div>
+          <button
+            type="button"
+            onClick={openCart}
+            className="btn btn-ghost relative"
+            aria-label={itemCount > 0 ? `Bag, ${itemCount} items` : "Bag"}
           >
-            Shop
-          </Link>
-          <Link
-            href="/#how-it-works"
-            className="text-sm text-white/60 transition hover:text-white"
-          >
-            How It Works
-          </Link>
-          <Link
-            href="/#features"
-            className="text-sm text-white/60 transition hover:text-white"
-          >
-            Features
-          </Link>
-        </nav>
-
-        <button
-          onClick={openCart}
-          className="relative flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-medium transition hover:bg-white/10"
-        >
-          <svg
-            width="18"
-            height="18"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z" />
-            <path d="M3 6h18" />
-            <path d="M16 10a4 4 0 0 1-8 0" />
-          </svg>
-          Bag
-          {itemCount > 0 && (
-            <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-[#B8E638] text-[10px] font-bold text-black">
-              {itemCount}
-            </span>
-          )}
-        </button>
+            Bag
+            {itemCount > 0 && (
+              <span className="absolute -right-1.5 -top-1.5 flex h-5 min-w-5 items-center justify-center rounded-full border-2 border-vast bg-glow px-1 text-[10px] font-bold">
+                {itemCount}
+              </span>
+            )}
+          </button>
+        </div>
       </div>
     </header>
   );
