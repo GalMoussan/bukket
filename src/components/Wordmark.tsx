@@ -4,6 +4,6 @@ type WordmarkProps = {
 
 export default function Wordmark({ className = "" }: WordmarkProps) {
   return (
-    <span className={`display ${className}`}>[[ BUKKET ]]</span>
+    <span className={`display ${className}`}>the BUKKET experience</span>
   );
 }

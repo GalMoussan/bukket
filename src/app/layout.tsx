@@ -26,11 +26,11 @@ const playpen = Playpen_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Bukket — The Original Portable Gravity Bong",
+  title: "the BUKKET experience — The Original Portable Gravity Bong",
   description:
     "Shop the Bukket gravity bong in 4 bold colors. Portable, durable, and engineered for smooth hits. Free shipping on orders over $50.",
   openGraph: {
-    title: "Bukket — The Original Portable Gravity Bong",
+    title: "the BUKKET experience — The Original Portable Gravity Bong",
     description:
       "Shop the Bukket gravity bong in 4 bold colors. Portable, durable, and engineered for smooth hits.",
     type: "website",

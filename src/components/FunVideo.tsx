@@ -3,12 +3,13 @@
 import { VIDEOS } from "@/lib/product";
 import { motion, useReducedMotion } from "framer-motion";
 import YouTubeEmbed from "./YouTubeEmbed";
+import LocalVideo from "./LocalVideo";
 
 export default function FunVideo() {
   const reduce = useReducedMotion();
 
   return (
-    <section className="py-14 md:py-20">
+    <section id="watch" className="scroll-mt-24 py-14 pb-24 md:py-20">
       <div className="page-gutter">
         <motion.div
           initial={reduce ? false : { opacity: 0, y: 10 }}
@@ -27,13 +28,28 @@ export default function FunVideo() {
           initial={reduce ? false : { opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mx-auto max-w-4xl"
+          className="grid items-start gap-5 md:grid-cols-[minmax(0,16fr)_minmax(0,9fr)] md:gap-6"
         >
-          <YouTubeEmbed
-            videoId={VIDEOS.fun.id}
-            title={VIDEOS.fun.title}
-            poster={VIDEOS.fun.poster}
-          />
+          <figure>
+            <YouTubeEmbed
+              videoId={VIDEOS.fun.id}
+              title={VIDEOS.fun.title}
+              poster={VIDEOS.fun.poster}
+            />
+            <figcaption className="mt-3 text-center text-sm text-muted">
+              {VIDEOS.fun.title}
+            </figcaption>
+          </figure>
+          <figure>
+            <LocalVideo
+              src={VIDEOS.session.src}
+              title={VIDEOS.session.title}
+              poster={VIDEOS.session.poster}
+            />
+            <figcaption className="mt-3 text-center text-sm text-muted">
+              {VIDEOS.session.title}
+            </figcaption>
+          </figure>
         </motion.div>
       </div>
     </section>

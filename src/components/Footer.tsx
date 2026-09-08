@@ -47,6 +47,11 @@ export default function Footer() {
                 FAQ
               </a>
             </li>
+            <li>
+              <Link href="/terms" className="hover:text-cream">
+                Terms
+              </Link>
+            </li>
           </ul>
         </div>
       </div>

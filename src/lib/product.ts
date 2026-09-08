@@ -18,6 +18,11 @@ export const VIDEOS = {
     title: "Bukket Movie",
     poster: "/products/blue-yellow.png",
   },
+  session: {
+    src: "/videos/bukket-session.mp4",
+    title: "NowThis — Bukket in action",
+    poster: "/videos/bukket-session.jpg",
+  },
 } as const;
 
 export const SHIPPING = {

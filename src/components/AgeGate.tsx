@@ -54,7 +54,7 @@ export default function AgeGate() {
             exit={{ scale: 0.97, opacity: 0 }}
             className="panel w-full max-w-md p-8 text-center"
           >
-            <Wordmark className="mb-6 block text-3xl text-cream" />
+            <Wordmark className="mb-6 block text-2xl text-cream sm:text-3xl" />
             <h2 id="age-gate-title" className="display mb-3 text-2xl">
               Age Verification
             </h2>

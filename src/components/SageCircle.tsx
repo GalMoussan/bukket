@@ -2,6 +2,10 @@
 
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 
+function coord(n: number) {
+  return n.toFixed(2);
+}
+
 function Ticks() {
   const marks = Array.from({ length: 72 }, (_, i) => {
     const deg = i * 5;
@@ -9,17 +13,13 @@ function Ticks() {
     const inner = long ? 178 : 186;
     const outer = 196;
     const rad = (deg * Math.PI) / 180;
-    const x1 = 200 + inner * Math.cos(rad);
-    const y1 = 200 + inner * Math.sin(rad);
-    const x2 = 200 + outer * Math.cos(rad);
-    const y2 = 200 + outer * Math.sin(rad);
     return (
       <line
         key={deg}
-        x1={x1}
-        y1={y1}
-        x2={x2}
-        y2={y2}
+        x1={coord(200 + inner * Math.cos(rad))}
+        y1={coord(200 + inner * Math.sin(rad))}
+        x2={coord(200 + outer * Math.cos(rad))}
+        y2={coord(200 + outer * Math.sin(rad))}
         stroke="currentColor"
         strokeWidth={long ? 1.4 : 0.7}
         strokeLinecap="round"

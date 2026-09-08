@@ -3,6 +3,7 @@ import Hero from "@/components/Hero";
 import ColorShowcase from "@/components/ColorShowcase";
 import HowItWorks from "@/components/HowItWorks";
 import Features from "@/components/Features";
+import PressClipping from "@/components/PressClipping";
 import FunVideo from "@/components/FunVideo";
 import CartDrawer from "@/components/CartDrawer";
 import StickyBuyBar from "@/components/StickyBuyBar";
@@ -19,6 +20,7 @@ export default function Home() {
         <ColorShowcase />
         <HowItWorks />
         <Features />
+        <PressClipping />
         <FunVideo />
       </main>
       <Footer />
