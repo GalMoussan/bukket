@@ -26,6 +26,7 @@ type CartContextType = {
   addToCart: () => void;
   removeFromCart: (variantId: string) => void;
   updateQuantity: (variantId: string, quantity: number) => void;
+  clearCart: () => void;
   openCart: () => void;
   closeCart: () => void;
   total: number;
@@ -133,6 +134,10 @@ export function CartProvider({ children }: { children: ReactNode }) {
     setCartItems((prev) => prev.filter((i) => i.variant.id !== variantId));
   }, []);
 
+  const clearCart = useCallback(() => {
+    setCartItems(() => EMPTY_ITEMS);
+  }, []);
+
   const updateQuantity = useCallback((variantId: string, quantity: number) => {
     if (quantity <= 0) {
       setCartItems((prev) => prev.filter((i) => i.variant.id !== variantId));
@@ -161,6 +166,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
         addToCart,
         removeFromCart,
         updateQuantity,
+        clearCart,
         openCart: () => setIsOpen(true),
         closeCart: () => setIsOpen(false),
         total,

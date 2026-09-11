@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { PRODUCT } from "@/lib/product";
 import { motion, useReducedMotion } from "framer-motion";
 
@@ -9,7 +10,7 @@ export default function Features() {
   const reduce = useReducedMotion();
 
   return (
-    <section id="features" className="page-gutter scroll-mt-24 py-14 md:py-20">
+    <section id="features" className="page-gutter scroll-mt-24 py-14 md:py-20 [content-visibility:auto] [contain-intrinsic-size:1px_800px]">
       <div className="chalkboard px-6 py-10 md:px-12 md:py-14">
         <motion.div
           initial={reduce ? false : { opacity: 0, y: 10 }}
@@ -37,6 +38,14 @@ export default function Features() {
               <h3 className="mb-2 text-lg font-bold">{feature.title}</h3>
               <p className="text-sm leading-relaxed text-[#3a3832]">
                 {feature.description}
+                {"link" in feature && feature.link ? (
+                  <Link
+                    href={feature.link.href}
+                    className="font-bold underline decoration-[#d97757]/80 underline-offset-2 hover:text-[#7a3d28]"
+                  >
+                    {feature.link.label}
+                  </Link>
+                ) : null}
               </p>
             </motion.article>
           ))}

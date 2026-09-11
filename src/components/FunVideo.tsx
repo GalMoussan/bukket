@@ -9,7 +9,7 @@ export default function FunVideo() {
   const reduce = useReducedMotion();
 
   return (
-    <section id="watch" className="scroll-mt-24 py-14 pb-24 md:py-20">
+    <section id="watch" className="scroll-mt-24 py-14 pb-24 md:py-20 [content-visibility:auto] [contain-intrinsic-size:1px_900px]">
       <div className="page-gutter">
         <motion.div
           initial={reduce ? false : { opacity: 0, y: 10 }}
@@ -19,8 +19,9 @@ export default function FunVideo() {
         >
           <p className="display mb-2 text-4xl md:text-5xl">Watch This</p>
           <h2 className="eyebrow">The Bukket Experience</h2>
-          <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-muted">
-            See the Bukket in action — the hits, the laughs, the legend.
+          <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-muted">
+            See the Bukket in action — the hits, how easy it is to use, the
+            laughs - why are you waiting - go buy it now!
           </p>
         </motion.div>
 

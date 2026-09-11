@@ -48,11 +48,18 @@ export default function RootLayout({
       data-scroll-behavior="smooth"
       className={`${outfit.variable} ${assistant.variable} ${playpen.variable} h-full antialiased`}
     >
-      <body className="min-h-full bg-night text-cream">
-        <CartProvider>
-          <AgeGate />
-          {children}
-        </CartProvider>
+      <body className="relative min-h-full bg-night text-cream">
+        <div className="site-aura" aria-hidden="true">
+          <span className="site-aura-wash" />
+          <span className="site-aura-ring site-aura-ring-a" />
+          <span className="site-aura-ring site-aura-ring-b" />
+        </div>
+        <div className="relative z-10">
+          <CartProvider>
+            <AgeGate />
+            {children}
+          </CartProvider>
+        </div>
       </body>
     </html>
   );

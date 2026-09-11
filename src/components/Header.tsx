@@ -25,6 +25,9 @@ export default function Header() {
             <Link href="/terms" className="btn btn-chip px-3">
               Terms
             </Link>
+            <Link href="/contact" className="btn btn-chip px-3">
+              Contact
+            </Link>
           </div>
 
           <Link

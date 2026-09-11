@@ -40,43 +40,47 @@ export const PRODUCT = {
     {
       title: "Portable & Durable",
       description:
-        "Molded from high-grade plastic. Fits in a backpack, built to last session after session.",
+        "Molded from high-grade plastic. Bag included for easy carry, can fit in any bag. Built to last session after session with all of your friends.",
       icon: "shield",
     },
     {
       title: "Smooth Gravity Hits",
       description:
-        "The patented chamber design delivers dense, cool vapor with every pull.",
+        "The patented chamber design delivers dense, cool vapor with every pull - full experience of a gravity bong in a portable, easy-to-use way.",
       icon: "wind",
-    },
-    {
-      title: "Easy to Clean",
-      description:
-        "Disassembles in seconds. Rinse, dry, repeat. No complicated parts.",
-      icon: "sparkles",
     },
     {
       title: "Replaceable Parts",
       description:
-        "Bowl, base ring, and chamber components available separately when you need them.",
+        "Bowl, base ring, and chamber components available separately when you need them, all in here - ",
+      link: { href: "/contact", label: "contact us today" },
       icon: "wrench",
+    },
+    {
+      title: "Easy to Clean",
+      description:
+        "Disassembles in seconds. Rinse, dry, repeat. No complicated parts. It's 2026, we shouldn't work hard.",
+      icon: "sparkles",
     },
   ],
   howItWorks: [
     {
       step: 1,
       title: "Fill & Load",
-      description: "Add water to the chamber and pack the bowl.",
+      description:
+        "Remove the head-piece and fill it up with your smoking-leaves, Place the head-piece with the smoking leaves on it's designated location on top",
     },
     {
       step: 2,
-      title: "Pull Down",
-      description: "Submerge the base to create vacuum pressure.",
+      title: "Light & Pull down",
+      description:
+        "Light the smoking-leaves on the head-piece, and as you light it - pull up the top part of the BUKKET to slowly open the accordion and suck the smoke inside",
     },
     {
       step: 3,
-      title: "Light & Lift",
-      description: "Ignite and slowly raise — gravity pulls the hit through.",
+      title: "Enhale and release",
+      description:
+        "When accordion is fully open, remove the head-piece and enhale the content of the BUKKET, Enjoy an extraordinary experience",
     },
   ],
 };

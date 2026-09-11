@@ -8,7 +8,7 @@ export default function HowItWorks() {
   const reduce = useReducedMotion();
 
   return (
-    <section id="how-it-works" className="bg-mist scroll-mt-24 py-14 md:py-20">
+    <section id="how-it-works" className="relative scroll-mt-24 bg-mist/60 py-14 md:py-20 [content-visibility:auto] [contain-intrinsic-size:1px_900px]">
       <div className="page-gutter">
         <motion.div
           initial={reduce ? false : { opacity: 0, y: 10 }}

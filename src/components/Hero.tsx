@@ -18,6 +18,7 @@ export default function Hero() {
         <>
           <span className="smoke-wisp -left-24 top-8 hidden md:block" />
           <span className="smoke-wisp smoke-wisp-b -right-28 top-24 hidden md:block" />
+          <span className="smoke-wisp -right-16 bottom-[-4rem] hidden lg:block" />
         </>
       )}
       <motion.div
@@ -60,7 +61,7 @@ export default function Hero() {
           </p>
         </div>
 
-        <div className="relative order-1 flex items-center justify-center overflow-hidden md:order-2">
+        <div className="relative order-1 flex items-center justify-center md:order-2">
           <SageCircle />
           <div className="relative z-10 aspect-square w-full max-w-md">
             <AnimatePresence mode="wait">
@@ -76,7 +77,7 @@ export default function Hero() {
                   src={selectedVariant.image}
                   alt={`Bukket in ${selectedVariant.name}`}
                   fill
-                  className="object-contain p-6"
+                  className="object-contain p-8 md:p-10"
                   priority
                   sizes="(max-width: 768px) 100vw, 50vw"
                 />

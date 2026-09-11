@@ -16,6 +16,7 @@ function useHasHydrated() {
 
 type CheckoutForm = {
   email: string;
+  phone: string;
   firstName: string;
   lastName: string;
   address: string;
@@ -29,6 +30,7 @@ type FieldErrors = Partial<Record<keyof CheckoutForm, string>>;
 
 const EMPTY_FORM: CheckoutForm = {
   email: "",
+  phone: "",
   firstName: "",
   lastName: "",
   address: "",
@@ -47,6 +49,9 @@ function validate(form: CheckoutForm): FieldErrors {
   if (!form.email.trim() || !form.email.includes("@")) {
     errors.email = "Enter a valid email";
   }
+  if (!form.phone.trim() || form.phone.trim().length < 6) {
+    errors.phone = "Enter a valid phone number";
+  }
   if (!form.firstName.trim()) errors.firstName = "Required";
   if (!form.lastName.trim()) errors.lastName = "Required";
   if (!form.address.trim()) errors.address = "Required";
@@ -58,10 +63,15 @@ function validate(form: CheckoutForm): FieldErrors {
 
 export default function CheckoutView() {
   const hydrated = useHasHydrated();
-  const { items, total, itemCount, updateQuantity, removeFromCart } = useCart();
+  const { items, total, itemCount, updateQuantity, removeFromCart, clearCart } =
+    useCart();
   const [form, setForm] = useState<CheckoutForm>(EMPTY_FORM);
   const [errors, setErrors] = useState<FieldErrors>({});
   const [submitted, setSubmitted] = useState(false);
+  const [busy, setBusy] = useState(false);
+  const [submitError, setSubmitError] = useState("");
+  const [placedTotal, setPlacedTotal] = useState(0);
+  const [placedCount, setPlacedCount] = useState(0);
 
   const shipping = shippingFor(total);
   const grandTotal = total + shipping;
@@ -70,17 +80,57 @@ export default function CheckoutView() {
     setForm((prev) => ({ ...prev, [field]: value }));
   };
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const nextErrors = validate(form);
     setErrors(nextErrors);
+    setSubmitError("");
     const firstError = (Object.keys(nextErrors) as (keyof CheckoutForm)[])[0];
     if (firstError) {
       document.getElementById(`checkout-${firstError}`)?.focus();
       return;
     }
     if (items.length === 0) return;
-    setSubmitted(true);
+
+    setBusy(true);
+    try {
+      const response = await fetch("/api/order", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...form,
+          items: items.map((item) => ({
+            variantId: item.variant.id,
+            quantity: item.quantity,
+          })),
+        }),
+      });
+      const data = (await response.json()) as {
+        error?: string;
+        errors?: FieldErrors;
+        total?: number;
+        itemCount?: number;
+      };
+      if (!response.ok) {
+        if (data.errors) {
+          setErrors(data.errors);
+          const serverError = (Object.keys(data.errors) as (keyof CheckoutForm)[])[0];
+          if (serverError) {
+            document.getElementById(`checkout-${serverError}`)?.focus();
+          }
+        }
+        setSubmitError(data.error ?? "Could not send the order. Try again.");
+        return;
+      }
+      setPlacedTotal(data.total ?? grandTotal);
+      setPlacedCount(data.itemCount ?? itemCount);
+      clearCart();
+      setSubmitted(true);
+    } catch {
+      setSubmitError("Could not send the order. Try again.");
+    } finally {
+      setBusy(false);
+    }
   };
 
   if (!hydrated) {
@@ -113,12 +163,12 @@ export default function CheckoutView() {
     return (
       <section className="page-gutter py-16">
         <div className="panel mx-auto max-w-xl p-8 text-center">
-          <p className="eyebrow mb-2">Preview</p>
-          <h1 className="display mb-3 text-4xl">Order ready</h1>
+          <p className="eyebrow mb-2">Purchase listed</p>
+          <h1 className="display mb-3 text-4xl">Order received</h1>
           <p className="mb-8 text-sm leading-relaxed text-muted">
-            Payment isn&apos;t live yet, so nothing was charged. Your bag still
-            has {itemCount} item{itemCount === 1 ? "" : "s"} totaling $
-            {grandTotal.toFixed(2)}.
+            We have {placedCount} item{placedCount === 1 ? "" : "s"} totaling $
+            {placedTotal.toFixed(2)}. Payment isn&apos;t live yet, so nothing
+            was charged — the shop has the purchase on email.
           </p>
           <Link href="/#product" className="btn btn-primary">
             Back to shop
@@ -134,7 +184,8 @@ export default function CheckoutView() {
         <p className="eyebrow mb-2">Checkout</p>
         <h1 className="display text-4xl md:text-5xl">Your order</h1>
         <p className="mt-2 max-w-[58ch] text-sm text-muted">
-          Review your bag. Payment will be added next — you will not be charged.
+          Review your bag and place the order. Payment will be added next —
+          you will not be charged yet.
         </p>
       </div>
 
@@ -142,15 +193,26 @@ export default function CheckoutView() {
         <form onSubmit={handleSubmit} className="order-2 space-y-8 lg:order-1" noValidate>
           <fieldset className="space-y-4">
             <legend className="mb-2 text-lg font-semibold">Contact</legend>
-            <Field
-              id="checkout-email"
-              label="Email"
-              type="email"
-              autoComplete="email"
-              value={form.email}
-              error={errors.email}
-              onChange={(value) => setField("email", value)}
-            />
+            <div className="grid gap-4 sm:grid-cols-2">
+              <Field
+                id="checkout-email"
+                label="Email"
+                type="email"
+                autoComplete="email"
+                value={form.email}
+                error={errors.email}
+                onChange={(value) => setField("email", value)}
+              />
+              <Field
+                id="checkout-phone"
+                label="Phone number"
+                type="tel"
+                autoComplete="tel"
+                value={form.phone}
+                error={errors.phone}
+                onChange={(value) => setField("phone", value)}
+              />
+            </div>
           </fieldset>
 
           <fieldset className="space-y-4">
@@ -216,11 +278,16 @@ export default function CheckoutView() {
             </div>
           </fieldset>
 
-          <button type="submit" className="btn btn-primary w-full">
-            Place order
+          {submitError ? (
+            <p className="text-sm text-terracotta" role="alert">
+              {submitError}
+            </p>
+          ) : null}
+          <button type="submit" className="btn btn-primary w-full" disabled={busy}>
+            {busy ? "Sending order…" : "Place order"}
           </button>
           <p className="text-center text-xs text-muted">
-            Preview only. Payment is not live yet.
+            Places the purchase with the shop by email. Payment is not live yet.
           </p>
         </form>
 
